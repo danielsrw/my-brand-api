@@ -4,6 +4,7 @@ const express = require("express");
 const paginate = require("express-paginate");
 const passport = require("passport");
 const { connect } = require("mongoose");
+const mongoose = require("mongoose");
 const swaggerUi = require("swagger-ui-express");
 const swaggerFile = require("./swagger_output.json");
  
@@ -20,7 +21,7 @@ app.use(paginate.middleware(process.env.LIMIT, process.env.MAX_LIMIT));
 app.use(router);
 app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
-connect.set('strictQuery')
+mongoose.set('strictQuery', false)
 const runApp = async () => {
     try {
         await connect(process.env.MONGO_DB, {
